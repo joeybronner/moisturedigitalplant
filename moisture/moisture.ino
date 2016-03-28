@@ -18,6 +18,10 @@ int digital[10][8] = {
 long  n = 1;
 int   x = 100;
 double del = 200000;
+int same = 0;
+int first = 0;
+int secon = 0;
+int third = 0;
 
 void setup()
 {
@@ -36,6 +40,7 @@ void setup()
   for(int i=0;i<4;i++) {
     pinMode(d[i],OUTPUT); 
   }
+  
 }
 
 void loop()
@@ -44,10 +49,15 @@ void loop()
   int SensorValue = analogRead(A0);
   String sValue = String(SensorValue);
 
-  // Split sensor value to write specific number on digital screen
-  int first = sValue.substring(0, 1).toInt();
-  int secon = sValue.substring(1, 2).toInt();
-  int third = sValue.substring(2, 3).toInt();
+  // Avoid blinks! 
+  same++;
+  if (same > 100) {
+      // Split sensor value to write specific number on digital screen
+      first = sValue.substring(0, 1).toInt();
+      secon = sValue.substring(1, 2).toInt();
+      third = sValue.substring(2, 3).toInt();
+      same = 0;
+  }
   
   // State: DRY
   if (SensorValue < 1000 && SensorValue >= 600) {
@@ -65,6 +75,11 @@ void loop()
   }
 
   // Write digital screen numbers
+  clearLEDs();
+  pickDigit(1);
+  showDigital(0);
+  delayMicroseconds(del);
+  
   clearLEDs();
   pickDigit(2);
   showDigital(first);
