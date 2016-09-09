@@ -52,6 +52,7 @@ void loop()
   // Avoid blinks! 
   same++;
   if (same > 100) {
+      Serial.print(sValue);
       // Split sensor value to write specific number on digital screen
       first = sValue.substring(0, 1).toInt();
       secon = sValue.substring(1, 2).toInt();
@@ -60,7 +61,7 @@ void loop()
   }
   
   // State: DRY
-  if (SensorValue < 1000 && SensorValue >= 600) {
+  if (SensorValue < 1000 && SensorValue >= 700) {
     digitalWrite(13, HIGH);
   }
 
